@@ -1,0 +1,31 @@
+.tasks__wrapper {
+  display: grid;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.btn__add-task {
+  background: transparent;
+  border: none;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+  cursor: pointer;
+}
+
+.task__item {
+  display: flex;
+  align-items: center;
+
+  label {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.task__item__ckeckbox {
+  display: none;
+
+  &:checked ~ label {
+    background-color: blue;
+  }
+}
