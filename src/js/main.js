@@ -228,9 +228,6 @@ Todo.prototype.taskDone = function (e) {
 
 
 	Todo.prototype.changeState(checkbox);
-	setTimeout(() => {
-		Todo.prototype.countTask();
-	}, 250);
 }
 
 // Изменяет состояние задачи по клику на чекбокс
@@ -238,7 +235,7 @@ Todo.prototype.changeState = function (element) {
 
 	let taskState = element.parentElement.dataset.taskState,
 		taskId = element.parentElement.dataset.taskId,
-		tasks = Todo.prototype.tasks;
+		tasks = JSON.parse(`[${Todo.prototype.myStorage.tasks}]`).reverse();
 
 
 	if (!element.checked) {
