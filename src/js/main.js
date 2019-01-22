@@ -19,7 +19,6 @@ if (!Task.prototype.myStorage.taskID) Task.prototype.myStorage.taskID = 1;
 
 
 
-
 // Todo constructor
 
 function Todo() { }
