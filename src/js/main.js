@@ -58,6 +58,7 @@ Todo.prototype.addTask = function addTask() {
 	Todo.prototype.myStorage.tasks ? Todo.prototype.myStorage.tasks += ',' + JSON.stringify(task) : Todo.prototype.myStorage.tasks = JSON.stringify(task);
 
 
+
 	let tasks = JSON.parse(`[${Todo.prototype.myStorage.tasks}]`).reverse();
 
 	Todo.prototype.changeStorage(tasks);
@@ -70,7 +71,7 @@ Todo.prototype.deleteTask = function (e) {
 	if (e.target.tagName != 'I' || e.target.classList.contains('edit')) return;
 
 	let taskID = e.target.getAttribute('data-task-id'),
-		tasks = Todo.prototype.tasks,
+		tasks = JSON.parse(`[${Todo.prototype.myStorage.tasks}]`).reverse(),
 		taskItemDelete = document.querySelector(`[data-task-id="${taskID}"]`);
 
 	for (let i = 0; i < tasks.length; i++) {
@@ -82,6 +83,7 @@ Todo.prototype.deleteTask = function (e) {
 			break;
 		}
 	}
+
 
 	taskItemDelete.style.marginBottom = 0;
 	taskItemDelete.style.height = '0px';
@@ -101,11 +103,13 @@ Todo.prototype.editTask = function (e) {
 	if (e.target.tagName != 'I' || e.target.classList.contains('bin')) return;
 
 	let taskID = e.target.getAttribute('data-task-id'),
-		tasks = Todo.prototype.tasks,
+		tasks = JSON.parse(`[${Todo.prototype.myStorage.tasks}]`).reverse(),
 		taskItemEdit = document.querySelector(`[data-task-id="${taskID}"]`);
 
 	for (let i = 0; i < tasks.length; i++) {
+
 		if (tasks[i].taskID == taskID) {
+
 			let tasksText = prompt('Заголовок задачи', tasks[i].text),
 				taskDate = prompt('Крайний срок выполнения задачи', tasks[i].date),
 				taskDesc = prompt('Пояснения к задаче', tasks[i].descriptionTask);
@@ -117,9 +121,9 @@ Todo.prototype.editTask = function (e) {
 			taskItemEdit.querySelector('p').textContent = tasksText;
 			taskItemEdit.querySelector('.task__create__date').textContent = taskDate;
 
-			break;
 		}
 	}
+
 
 	Todo.prototype.changeStorage(tasks);
 }
