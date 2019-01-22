@@ -1,0 +1,179 @@
+// Task constructor
+
+function Task(textTask, date, desc) {
+	this.text = textTask;
+	this.date = date;
+	this.descriptionTask = desc;
+	this.taskID = Task.ID;
+	this.state = 2;
+
+	Task.ID++;
+}
+
+
+Task.prototype = Object.create(null);
+Task.prototype.constructor = Task;
+Task.ID = 1;
+
+
+// Todo constructor
+
+function Todo() { }
+
+Todo.prototype = Object.create(Task.prototype);
+Todo.prototype.constructor = Todo;
+Todo.prototype.myStorage = localStorage;
+
+localStorage.removeItem('tasksProgress');
+
+
+
+Todo.prototype.addTask = function addTask() {
+
+	// Получаем данные от пользователя
+	let textTask = prompt('Что нужно выполнить?', ''),
+		date = prompt('Введите дату в формате ДД.МЕСЯЦ.ГОД. Например 31.12.2019', ''),
+		descriptionTask = prompt('Введите описание к задаче', '');
+
+	// Если пользователь не ввел данные, сообщаем ему об этом
+	if (!textTask) {
+		let danger = confirm('Вы не заполнили поле с текстом задачи');
+
+		if (danger) {
+			addTask();
+		}
+
+		return;
+	}
+
+	// Создаем задачу
+	let task = new Task(textTask, date, descriptionTask);
+
+
+	if (!Todo.prototype.myStorage.tasksProgress) Todo.prototype.myStorage.tasksProgress = '';
+	if (!Todo.prototype.myStorage.tasksComplete) Todo.prototype.myStorage.tasksComplete = '';
+	if (!Todo.prototype.myStorage.tasksFailed) Todo.prototype.myStorage.tasksFailed = '';
+
+	// Обновляем данные в localStorage
+	Todo.prototype.myStorage.tasksProgress ? Todo.prototype.myStorage.tasksProgress += ',' + JSON.stringify(task) : Todo.prototype.myStorage.tasksProgress = JSON.stringify(task);
+
+	Todo.prototype.myStorage.tasksComplete ? Todo.prototype.myStorage.tasksComplete += ',' + JSON.stringify(task) : Todo.prototype.myStorage.tasksComplete = JSON.stringify(task);
+
+	Todo.prototype.myStorage.tasksFailed ? Todo.prototype.myStorage.tasksFailed += ',' + JSON.stringify(task) : Todo.prototype.myStorage.tasksFailed = JSON.stringify(task);
+
+
+
+	console.log(localStorage);
+
+	// Выводим список задач
+	Todo.prototype.render();
+
+}
+
+
+Todo.prototype.render = function () {
+
+	let progressTasksData = '[' + Todo.prototype.myStorage.tasksProgress + ']';
+
+	console.log(progressTasksData);
+
+
+	let progress = JSON.parse(progressTasksData),
+		complete = JSON.parse(`[${Todo.prototype.myStorage.tasksComplete}]`),
+		failed = JSON.parse(`[${Todo.prototype.myStorage.tasksFailed}]`),
+		allTasks = [].concat(progress),
+		taskContiner = document.querySelector('.tasks'),
+		fragment = document.createDocumentFragment();
+
+	console.log(progress);
+
+
+	// Проходимся по массиву со всеми задачами
+	for (let i = 0; i < allTasks.length; i++) {
+		let taskItem = document.createElement('div'), // Блок задачи
+			labelContainer = document.createElement('div'), // Контейнер для чекбокса
+			taskText = document.createElement('p'), // Текст задачи
+			taskCheck = document.createElement('input'),
+			taskLabel = document.createElement('label'),
+			taskDate = document.createElement('span');
+
+
+		// Контайнер для задачи 
+		taskItem.classList.add('task');
+		taskItem.setAttribute('data-task-state', allTasks[i].state);
+		taskItem.setAttribute('data-task-id', allTasks[i].taskID);
+
+		taskCheck.type = 'checkbox';
+		taskCheck.id = allTasks[i].taskID;
+		taskCheck.classList.add('task__ckeckbox');
+
+		labelContainer.classList.add('label__container');
+		taskLabel.htmlFor = allTasks[i].taskID;
+		labelContainer.append(taskLabel);
+
+		// Текст задачи
+		taskText.innerHTML = allTasks[i].text;
+
+		// Блок с временем создания задачи
+		taskDate.classList.add('task__create__date');
+		taskDate.innerHTML = allTasks[i].date;
+
+
+		taskText.append(taskDate);
+
+
+		taskItem.append(taskCheck, labelContainer, taskText);
+
+
+		fragment.append(taskItem);
+	}
+
+
+	taskContiner.innerHTML = '';
+	taskContiner.append(fragment);
+
+}
+
+
+Todo.prototype.taskDone = function checked(e) {
+
+	let tasks = document.querySelector('.tasks');
+
+	if (e.target.tagName != 'LABEL') return;
+
+
+	let taskItem = e.target.parentElement.parentElement,
+		taskCheck = e.target.parentElement.previousElementSibling;
+
+	taskItem.setAttribute('data-task-state', 1);
+
+
+	tasks.addEventListener('click', checked);
+}
+
+
+Todo.prototype.run = function () {
+
+	// if (Todo.prototype.myStorage.tasksProgress || Todo.prototype.myStorage.takskComplete || Todo.prototype.myStorage.tasksFailed) this.render();
+
+	let addBtn = document.querySelector('.tasks__footer .btn__add');
+	addBtn.addEventListener('click', this.addTask);
+
+
+	// Todo.prototype.taskDone();
+}
+
+
+
+
+
+
+let todo = new Todo();
+
+
+todo.run();
+
+
+
+
+

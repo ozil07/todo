@@ -71,9 +71,9 @@ gulp.task('js', function () {
 	return gulp.src('src/js/**/*.js')
 		.pipe(concat('app.js'))
 		.pipe(gulp.dest('public/js'))
-		.pipe(uglify())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('public/js'))
+	// .pipe(uglify())
+	// .pipe(rename({ suffix: '.min' }))
+	// .pipe(gulp.dest('public/js'))
 });
 
 
@@ -130,11 +130,9 @@ gulp.task('sprite:png', function () {
 gulp.task('server', function () {
 	bs.init({
 		server: 'public',
-		tunnel: 'mysite',
-		notify: false,
 	});
 
-	bs.watch('public/**/*.*').on('change', bs.reload)
+	bs.watch('public/**/*.*').on('change', bs.reload);
 });
 
 

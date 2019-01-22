@@ -6,17 +6,67 @@
 		<h1>Мои задачи</h1>
 	</div>
 
+
+	<!-- Контейнер с кнопками сортировки -->
+	<input type="radio" name="sort" id="tasks__all">
+	<input type="radio" name="sort" id="tasks__in__progress" checked>
+	<input type="radio" name="sort" id="tasks__complete">
+	<input type="radio" name="sort" id="tasks__failed">
+
+
+	<div class="tasks__sort">
+		<label for="tasks__all" class="tasks__all">Всего (0)</label>
+		<label for="tasks__in__progress" class="tasks__in__progress">В процессе (0)</label>
+		<label for="tasks__complete" class="tasks__complete">Выполненно (0)</label>
+		<label for="tasks__failed" class="tasks__failed">Не выполнено (0)</label>
+	</div>
+
 	<!-- Блок с задачами -->
 	<div class="tasks">
-		<div class="task__item">
-			<input type="checkbox" class="task__item__ckeckbox" id="task-id"><label for="task-id"></label>
+
+		<!-- <div class="task" data-task-state="1">
+			<input type="checkbox" class="task__ckeckbox" id="task-id">
+			<div class="label__container">
+				<label for="task-id"></label>
+			</div>
+			<p>Далеко-далеко за словесными горами, в стране гласных и согласных живут рыбные
+				тексты.Продолжил вопрос ему даже встретил меня? Осталось вскоре не пустился?
+				<span class="task__create__date">18.01.2019 20:30</span>
+			</p>
+
+		</div>
+
+		<div class="task" data-task-state="0">
+			<input type="checkbox" class="task__ckeckbox" id="task-id1">
+			<div class="checkbox__container">
+				<label for="task-id1"></label>
+			</div>
 			<p>Далеко-далеко за словесными горами, в стране гласных и согласных живут рыбные тексты. Продолжил вопрос ему даже
 				встретил меня? Осталось вскоре не пустился?</p>
 		</div>
+
+		<div class="task" data-task-state="0">
+			<input type="checkbox" class="task__ckeckbox" id="task-id2">
+			<div class="checkbox__container">
+				<label for="task-id2"></label>
+			</div>
+			<p>Далеко-далеко за словесными горами, в стране гласных и согласных живут рыбные тексты. Продолжил вопрос ему даже
+				встретил меня? Осталось вскоре не пустился?</p>
+		</div>
+
+		<div class="task" data-task-state="1">
+			<input type="checkbox" class="task__ckeckbox" id="task-id3">
+			<div class="checkbox__container">
+				<label for="task-id3"></label>
+			</div>
+			<p>Далеко-далеко за словесными горами, в стране гласных и согласных живут рыбные тексты. Продолжил вопрос ему даже
+				встретил меня? Осталось вскоре не пустился?</p>
+		</div> -->
+
 	</div>
 
 	<!--  -->
 	<div class="tasks__footer">
-		<button class="btn__add-task" alt="Добавить задачу" title="Добавить задачу"><i class="icon add"></i></button>
+		<button class="btn__add" alt="Добавить задачу" title="Добавить задачу"><i class="icon add"></i> Новая задача</button>
 	</div>
 </div>

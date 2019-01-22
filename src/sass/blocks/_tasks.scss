@@ -1,31 +1,232 @@
+// Контейнер для приложения
 .tasks__wrapper {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-}
+  font-size: 14px;
 
-.btn__add-task {
-  background: transparent;
-  border: none;
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
-  cursor: pointer;
-}
-
-.task__item {
-  display: flex;
-  align-items: center;
-
-  label {
-    width: 25px;
-    height: 25px;
+  @include max-screen(576px) {
+    max-width: 100%;
+    padding: 0 15px;
   }
 }
 
-.task__item__ckeckbox {
+// Шапка приложения
+.tasks__header {
+  h1 {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+}
+
+#tasks__complete:checked {
+  & ~ .tasks .task:not([data-task-state="1"]) {
+    display: none;
+  }
+
+  & ~ .tasks__sort .tasks__complete {
+    opacity: 1;
+  }
+}
+
+#tasks__in__progress:checked {
+  & ~ .tasks .task:not([data-task-state="2"]) {
+    display: none;
+  }
+
+  & ~ .tasks__sort .tasks__in__progress {
+    opacity: 1;
+  }
+}
+
+#tasks__failed:checked {
+  & ~ .tasks .task:not([data-task-state="0"]) {
+    display: none;
+  }
+
+  & ~ .tasks__sort .tasks__failed {
+    opacity: 1;
+  }
+}
+
+#tasks__all:checked {
+  & ~ .tasks .task {
+    display: flex;
+  }
+
+  & ~ .tasks__sort .tasks__all {
+    opacity: 1;
+  }
+}
+
+// Стили для кнопок сортировки
+.tasks__sort {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  padding: 20px 0;
+
+  label {
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease-in-out;
+    margin-right: 10px;
+    text-align: center;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  input {
+    display: none;
+  }
+}
+
+[name="sort"] {
+  display: none;
+}
+
+// Стили ждя контейнера задач
+.tasks {
+  padding: 30px 0;
+  align-self: stretch;
+}
+
+// Стили для каждой задачи
+.task {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  overflow: hidden;
+  font: 600 14px/1.5 $ops;
+  height: 80px;
+  transition: all 0.5s linear;
+
+  &:hover {
+    .сontextual__links {
+      opacity: 1;
+    }
+  }
+
+  [data-task-state="1"] {
+    display: none;
+  }
+
+  .сontextual__links {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+    align-items: center;
+
+    i {
+      font-size: 4px;
+      margin-right: 5px;
+      cursor: pointer;
+      filter: drop-shadow(0 0 2px #000);
+    }
+  }
+
+  label {
+    border-radius: 50%;
+    border: 1px solid #333;
+    margin-right: 20px;
+    background: transparent url(sprite/sprite_png.png) 50% 50% no-repeat;
+    background-size: 0 60%;
+    transition: background-size 0.15s linear;
+    margin-bottom: 0;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+  }
+
+  .task__content {
+    margin-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: baseline;
+  }
+
+  .task__create__date {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: $blue;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s linear;
+  }
+}
+
+.task__ckeckbox {
   display: none;
 
-  &:checked ~ label {
-    background-color: blue;
+  &:checked ~ div label {
+    background-size: 60% 60%;
+    transition: background-size 0.15s linear;
+  }
+}
+
+[data-task-state="1"] {
+  .task__ckeckbox:checked ~ p {
+    text-decoration: line-through;
+  }
+}
+
+[data-task-state="0"] {
+  .task__create__date {
+    background-color: red;
+  }
+}
+
+[data-task-state="1"] {
+  .task__create__date {
+    background-color: #1bb165;
+  }
+}
+
+// Подвал приложения
+.tasks__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  padding: 15px 0;
+}
+
+.btn__add {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgb(0, 183, 255);
+  color: #fff;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  font: bold 13px $ops;
+
+  i {
+    margin-right: 10px;
+    font-size: 8px;
+  }
+}
+
+@include max-screen(576px) {
+  .tasks__sort {
+    font-size: 12px;
+    text-align: left;
   }
 }
